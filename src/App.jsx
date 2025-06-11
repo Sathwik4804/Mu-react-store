@@ -5,11 +5,12 @@ import "./App.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Login";
-import Cart from "./cart";
+import Cart from "./Cart";
 import Logout from "./Logout";
-import Order from "./order";
+import Order from "./Order";
 import Register from "./Register";
-import Product from "./product";
+import Test from "./Test";
+import Product from "./Product";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 export const AppContext = createContext();
@@ -26,8 +27,8 @@ function App() {
         <BrowserRouter>
           <Header name="mu-react-store" />
           <Routes>
-            <Route index element={<Product />} />
-            <Route path="/" element={<Product />} />
+            <Route index element={<Test />} />
+            <Route path="/" element={<Test />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
