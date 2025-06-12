@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import Login from "./Login";
 import Cart from "./cart";
 import Logout from "./Logout";
-import Order from "./Order";
+import Order from "./order";
 import Register from "./Register";
 import Test from "./Test";
 import Product from "./Product";
