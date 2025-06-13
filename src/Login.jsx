@@ -1,47 +1,62 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { AppContext } from "./App";
+// import "./Login.css";
+import axios from "axios";
+
 export default function Login() {
-  const [user, setUser] = useState({});
-  const [error, setError] = useState();
-  const Navigate = useNavigate();
-  const { users, setEmail } = useContext(AppContext);
-  const handleSubmit = () => {
-    const found = users.find(
-      (elem) => elem.email === user.email && elem.pass === user.pass
-    );
-    if (!found) {
-      setError("Access Denied");
-    } 
-    else {
-      setEmail(user.email)
-      Navigate("/");
+  const [user, setUser] = useState({ email: "", pass: "" });
+  const { setEmail } = useContext(AppContext);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const res = await axios.post("http://localhost:8080/login", {
+      email: user.email.trim(),
+      pass: user.pass.trim(),
+    });
+
+    if (res.data) {
+      setEmail(user.email);
+      navigate("/");
+    } else {
+      setError("User not found. Please register.");
     }
   };
+
   return (
-    <div>
-      <h2>Login Form</h2>
-      {error}
-      <p>
+    <div className="login-container">
+      <form className="login-box" onSubmit={handleLogin}>
+        <h2>Login</h2>
+
+        {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
+
+        <label>Email Id:</label>
         <input
           type="text"
+          placeholder="Enter Email Id"
           onChange={(e) => setUser({ ...user, email: e.target.value })}
+          value={user.email}
         />
-      </p>
-      <p>
+        <br /><br />
+        <label>Password:</label>
         <input
           type="password"
+          placeholder="Enter Password"
           onChange={(e) => setUser({ ...user, pass: e.target.value })}
+          value={user.pass}
         />
-      </p>
-      <p>
-        <button onClick={handleSubmit}>Login</button>
-      </p>
-      <hr />
-      <p>
-        <Link to="/register">Create Account</Link>
-      </p>
+        <br /><br />
+        <button type="submit" className="login-btn">
+          Log In
+        </button>
+        <br /><br />
+        <div className="register-link">
+          <Link to="/register">Don't have an account? Create now...</Link>
+        </div>
+      </form>
     </div>
   );
 }
