@@ -15,7 +15,7 @@ export default function Cart() {
 
   const handleLogin = () => {
     Navigate("/login");
-  };
+  }; 
 
   const placeOrder = () => {
     setOrders([...orders, cart]);
